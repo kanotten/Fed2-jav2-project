@@ -113,25 +113,33 @@ input:focus {
     margin-top: 10px;
 }
 
+/* Button Styling */
 .auth-links a {
-    text-decoration: none;
-    color: #007bff; /* Blue for links */
+    display: inline-block;
+    padding: 10px 20px; /* Same padding as the Register button */
+    background-color: #007bff; /* Blue button color like your links */
+    color: white; /* White text for the button */
+    border-radius: 5px; /* Rounded corners like the Register button */
+    text-decoration: none; /* Remove underline */
     font-weight: bold;
-    transition: color 0.3s;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .auth-links a:hover {
-    color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
-/* Button Styling */
 .auth-button {
-    padding: 10px 20px; /* Increased padding for a better look */
-    border: none;
-    border-radius: 5px; /* Match logout button style */
-    background-color: #dc3545; /* Red button color */
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
     color: white;
+    border-radius: 5px;
+    text-decoration: none;
     font-weight: bold;
+    text-align: center;
     cursor: pointer;
     transition: background-color 0.3s;
 }
