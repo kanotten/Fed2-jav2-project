@@ -4,42 +4,45 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Noroff FED2 JS2 CA</title>
-    <script type="module" src="/src/app.js"></script>
+    <title>Register</title>
     <link rel="stylesheet" href="/src/css/register.css" />
-
+    <script type="module" src="/src/js/ui/auth/register.js"></script>
 </head>
 
 <body>
     <div class="auth-container">
-
         <h1 class="auth-title">Register</h1>
-
         <form name="register" class="auth-form">
             <div class="form-group">
                 <label for="name">Name</label>
-                <input id="name" type="text" name="name" required maxlength="20" pattern="^[\w]+$"
-                    title="Please enter a username using only letters and numbers" />
+                <input id="name" type="text" name="name" value="Patrick123" required />
             </div>
-
             <div class="form-group">
                 <label for="email">Email</label>
-                <input id="email" type="email" name="email" required pattern="^[\w\-.]+@(stud\.)?noroff\.no$"
-                    title="Please enter a valid noroff.no or stud.noroff.no address" />
+                <input id="email" type="email" name="email" value="patroe01271@stud.noroff.no" required />
             </div>
-
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" required minlength="8" />
+                <input type="password" name="password" id="password" value="Password123!" required />
             </div>
-
-            <div class="auth-links">
-                <a href="/auth/login/">Login</a>
+            <div class="form-group">
+                <label for="bio">Bio (optional)</label>
+                <textarea id="bio" name="bio"
+                    placeholder="This is my profile bio...">I love programming and gaming.</textarea>
+            </div>
+            <div class="form-group">
+                <label for="avatar">Avatar URL (optional)</label>
+                <input type="text" id="avatar" name="avatar" placeholder="https://picsum.photos/200"
+                    value="https://picsum.photos/200" />
+            </div>
+            <div class="form-group">
+                <label for="banner">Banner URL (optional)</label>
+                <input type="text" id="banner" name="banner" placeholder="https://picsum.photos/600/200"
+                    value="https://picsum.photos/600/200" />
             </div>
             <button type="submit" class="auth-button">Register</button>
         </form>
     </div>
-
 </body>
 
 </html>
