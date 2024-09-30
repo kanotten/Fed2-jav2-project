@@ -1,6 +1,13 @@
-// export function authGuard() {
-// if (!localStorage.token) {
-// alert("You must be logged in to view this page");
-// window.location.href = "/auth/login/";
-// }
-// }
+export function authGuard() {
+  // Sjekk om vi er på profilsiden
+  if (window.location.pathname === "/profile/index.html") {
+    const authToken = localStorage.getItem("authToken");
+    const apiKey = localStorage.getItem("apiKey");
+
+    // Hvis authToken eller apiKey ikke finnes, omdiriger til innloggingssiden
+    if (!authToken || !apiKey) {
+      alert("You must be logged in to view this page");
+      window.location.href = "/auth/login/";
+    }
+  }
+}
