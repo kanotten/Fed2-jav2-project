@@ -17,9 +17,14 @@ form.addEventListener("submit", async (event) => {
 
   try {
     const result = await login(data);
-    if (result) {
+    if (result && result.data && result.data.accessToken) {
+      // Lagre accessToken i localStorage
+      localStorage.setItem("authToken", result.data.accessToken);
+
       alert("Login successful!");
       window.location.href = "/profile/index.html"; // Omdiriger til profil etter innlogging
+    } else {
+      alert("Login failed: No access token received.");
     }
   } catch (error) {
     console.error("Error during login:", error);
