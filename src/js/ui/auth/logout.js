@@ -1,19 +1,26 @@
+// src/js/ui/auth/logout.js
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Logout script loaded"); // Bekrefter at logout.js er lastet inn
+
+  // Sjekk at logout-knappen finnes
   const logoutButton = document.getElementById("logout-link");
 
   if (logoutButton) {
-    console.log("Logout button found"); // Bekrefter at logout-knappen finnes
+    console.log("Logout button found"); // Knappen finnes
     logoutButton.addEventListener("click", (e) => {
       e.preventDefault();
-      console.log("Logout button clicked"); // Bekrefter at logout-knappen klikkes
-      // Fjern authToken fra localStorage
+      console.log("Logout button clicked"); // Når knappen trykkes
+
+      // Fjern authToken og apiKey fra localStorage
       localStorage.removeItem("authToken");
-      console.log("authToken removed from localStorage"); // Bekrefter at authToken fjernes
-      // Omdiriger brukeren til login-siden
-      window.location.href = "/auth/login/";
+      localStorage.removeItem("apiKey");
+
+      console.log("authToken and apiKey removed from localStorage");
+
+      // Omdiriger til hjem-siden
+      window.location.href = "/";
     });
   } else {
-    console.log("Logout button not found");
+    console.log("Logout button NOT found"); // Hvis knappen ikke finnes
   }
 });
