@@ -1,6 +1,11 @@
+// src/js/utilities/authGuard.js
+
 export function authGuard() {
   // Sjekk om vi er på profilsiden
-  if (window.location.pathname === "/profile/index.html") {
+  if (
+    window.location.pathname === "/profile/index.html" ||
+    window.location.pathname === "/profile/"
+  ) {
     const authToken = localStorage.getItem("authToken");
     const apiKey = localStorage.getItem("apiKey");
 

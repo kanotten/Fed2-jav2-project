@@ -16,7 +16,6 @@
     <div class="container">
         <img src="public/images/noroff-logo.png" alt="Noroff Logo" class="logo" />
         <h1>Home</h1>
-
         <nav class="navbar">
             <a href="profile/">My Profile</a>
             <a href="auth/login/">Login</a>
@@ -26,7 +25,12 @@
         <button class="logout-button">Logout</button>
     </div>
 
-    <!-- Laster inn navbar.js -->
+    <!-- Laster inn checkProfileAccess for å beskytte tilgang til profil-lenken -->
+    <script type="module">
+        import { checkProfileAccess } from '/src/js/utilities/authGuard.js';
+        checkProfileAccess(); // Beskytter profil-lenken fra uautoriserte brukere
+    </script>
+
     <script type="module" src="/src/navbar.js"></script>
 </body>
 

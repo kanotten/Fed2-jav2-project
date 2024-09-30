@@ -20,7 +20,7 @@
   <!-- Bruk authGuard for å beskytte profilsiden -->
   <script type="module">
     import { authGuard } from '/src/js/utilities/authGuard.js';
-    authGuard(); // Sjekk om brukeren er logget inn, hvis ikke omdiriger til login
+    authGuard(); // Beskytt profilsiden ved å sjekke authToken og apiKey
   </script>
 
   <script type="module" src="/src/navbar.js"></script>
