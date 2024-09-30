@@ -5,12 +5,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Edit Post</title>
+  <link rel="stylesheet" href="../../src/css/navbar.css">
+  <link rel="stylesheet" href="../../src/css/edit-post.css">
+
   <script type="module" src="/src/app.js"></script>
-  <link rel="stylesheet" href="/src/css/edit-post.css" />
 </head>
 
 <body>
+  <div id="navbar-container"></div> <!-- Navbar vil bli lastet inn her -->
+
   <h1>Edit Post</h1>
+  <h2>hey</h2>
   <form name="editPost">
     <div>
       <label for="title">Title</label>
@@ -22,8 +27,11 @@
       <textarea id="content" name="content" required></textarea>
     </div>
 
-    <button type="submit">Save Changes</button>
+    <button type="submit">Update</button>
   </form>
+
+  <script type="module" src="/src/navbar.js"></script>
+
 </body>
 
 </html>

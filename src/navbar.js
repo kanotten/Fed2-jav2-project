@@ -1,8 +1,13 @@
+console.log("navbar.js loaded");
+
 document.addEventListener("DOMContentLoaded", async function () {
   try {
     const response = await fetch("/navbar.html"); // Oppdatert til riktig bane for navbar.html
     const navbarHTML = await response.text();
     document.getElementById("navbar-container").innerHTML = navbarHTML;
+
+    // Legg til logging for å bekrefte at navbaren er lastet
+    console.log("Navbar loaded for edit page");
 
     // Sjekk om brukeren er innlogget
     const token = localStorage.getItem("authToken");
