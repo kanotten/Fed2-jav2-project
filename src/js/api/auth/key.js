@@ -1,15 +1,15 @@
 // src/js/api/auth/key.js
-export async function getKey(token) {
+export async function getKey(authToken) {
   try {
     const response = await fetch(
       "https://v2.api.noroff.dev/auth/create-api-key",
       {
-        // Oppdatert URL
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Du bruker tokenet etter innlogging
+          Authorization: `Bearer ${authToken}`,
         },
+        body: JSON.stringify({ name: "My API Key name" }), // Optional name
       }
     );
 
@@ -21,5 +21,6 @@ export async function getKey(token) {
     return result;
   } catch (error) {
     console.error("API Key generation failed:", error);
+    throw error; // Rethrow error for further handling
   }
 }
