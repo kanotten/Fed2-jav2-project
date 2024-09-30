@@ -5,11 +5,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Create Post</title>
+  <link rel="stylesheet" href="/src/css/navbar.css">
   <script type="module" src="/src/app.js"></script>
-  <link rel="stylesheet" href="/src/css/create-post.css" />
 </head>
 
 <body>
+  <div id="navbar-container"></div> <!-- Navbar vil bli lastet inn her -->
+
   <h1>Create New Post</h1>
   <form name="createPost">
     <div>
@@ -24,6 +26,8 @@
 
     <button type="submit">Create</button>
   </form>
+
+  <script type="module" src="/src/navbar.js"></script> <!-- Inkluder navbar.js her -->
 </body>
 
 </html>

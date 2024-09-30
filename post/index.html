@@ -1,13 +1,33 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Noroff FED2 JS2 CA</title>
-    <script type="module" src="/src/app.js"></script>
-  </head>
-  <body>
-    <h1>Post Page</h1>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Post</title>
+  <link rel="stylesheet" href="/src/css/navbar.css">
+  <script type="module" src="/src/app.js"></script>
+</head>
+
+<body>
+  <div id="navbar-container"></div> <!-- Navbar vil bli lastet inn her -->
+
+  <h1>Edit Post</h1>
+  <form name="editPost">
+    <div>
+      <label for="title">Title</label>
+      <input id="title" type="text" name="title" required />
+    </div>
+
+    <div>
+      <label for="content">Content</label>
+      <textarea id="content" name="content" required></textarea>
+    </div>
+
+    <button type="submit">Update</button>
+  </form>
+
+  <script type="module" src="/src/navbar.js"></script> <!-- Inkluder navbar.js her -->
+</body>
+
 </html>

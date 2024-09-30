@@ -44,3 +44,35 @@ nav {
     }
   }
   
+  /* Style for the home icon */
+.home-icon {
+  width: 20px; /* Størrelse på ikonet */
+  height: 20px;
+  vertical-align: middle; /* For å sentrere det med teksten */
+  margin-right: 8px; /* Liten margin mellom ikonet og teksten */
+}
+
+nav ul li a {
+  display: flex;
+  align-items: center;
+}
+
+/* Hover-effekt for hjemikonet og resten av linkene */
+nav ul li a:hover {
+  background-color: #555;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.logout-button {
+  background-color: #f44336; /* Rød farge for logg ut-knappen */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #d32f2f; /* Mørkere rød ved hover */
+}
