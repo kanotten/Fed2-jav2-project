@@ -5,8 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Sjekk at logout-knappen finnes
   const logoutButton = document.getElementById("logout-link");
 
+  console.log(logoutButton); // Sjekk om knappen faktisk blir funnet
+
   if (logoutButton) {
-    console.log("Logout button found"); // Knappen finnes
+    console.log("Logout button found"); // Bekrefter at knappen er funnet
     logoutButton.addEventListener("click", (e) => {
       e.preventDefault();
       console.log("Logout button clicked"); // Når knappen trykkes
