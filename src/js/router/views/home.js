@@ -18,7 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
       posts.data.forEach((post) => {
         const postElement = document.createElement("div");
         postElement.className = "post-card";
+
         postElement.innerHTML = `
+        <a href="/post.html?id=${post.id}">
           <img src="${post.media?.url || ""}" alt="${
           post.media?.alt || "No image available"
         }">
@@ -28,7 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <p class="date">Opprettet: ${new Date(
             post.created
           ).toLocaleDateString()}</p>
-        `;
+        </a>
+      `;
         postsContainer.appendChild(postElement);
       });
     });
