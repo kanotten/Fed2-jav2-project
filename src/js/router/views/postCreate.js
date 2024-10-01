@@ -13,8 +13,13 @@ export async function onCreatePost(event) {
     "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/640px-A_small_cup_of_coffee.JPG";
   const mediaAlt = event.target.mediaAlt.value || "Default alt text";
 
-  // Brukerens navn hardkodet for nå
-  const name = "Patrick123"; // Bruk navnet som skal brukes i API-kallet
+  // Hent name fra localStorage
+  const name = localStorage.getItem("name"); // Nå henter vi det lagrede brukernavnet
+
+  if (!name) {
+    alert("Brukernavn ikke funnet. Vennligst logg inn på nytt.");
+    return;
+  }
 
   // Data som skal sendes
   const postData = {
@@ -36,7 +41,7 @@ export async function onCreatePost(event) {
     console.log("Bruker token og apiKey:", { token, apiKey });
 
     const response = await fetch(
-      `https://v2.api.noroff.dev/blog/posts/${name}`,
+      `https://v2.api.noroff.dev/blog/posts/${name}`, // Bruk name fra localStorage i URL-en
       {
         method: "POST",
         headers: {
@@ -55,6 +60,7 @@ export async function onCreatePost(event) {
       console.log("Post opprettet:", result);
       alert("Posten ble opprettet suksessfullt!");
       event.target.reset(); // Tøm skjemaet
+      return; // Avslutt funksjonen etter en suksessfull post
     } else {
       const errorData = await response.json();
       console.error("Feil ved oppretting av innlegg:", errorData);
