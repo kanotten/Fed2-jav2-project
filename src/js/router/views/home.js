@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const postElement = document.createElement("div");
         postElement.className = "post-card";
         postElement.innerHTML = `
-          <img src="${
-            post.media?.url || "https://via.placeholder.com/300"
-          }" alt="${post.media?.alt || "No image available"}">
+          <img src="${post.media?.url || ""}" alt="${
+          post.media?.alt || "No image available"
+        }">
           <h2>${post.title}</h2>
           <p>${post.body || "No description available"}</p>
           <p class="tags">Tags: ${post.tags.join(", ")}</p>
