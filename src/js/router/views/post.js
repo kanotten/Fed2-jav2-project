@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
           // Håndter tomme verdier for tags og media
           const postTags =
             tags.length > 0 ? tags.join(", ") : "No tags available";
-          const postImage = media?.url || "https://via.placeholder.com/300";
+          const postImage = media?.url || "";
           const postImageAlt = media?.alt || "No image available";
 
           postContainer.innerHTML = `
