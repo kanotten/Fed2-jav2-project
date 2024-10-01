@@ -1,0 +1,24 @@
+.post-details {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.post-details img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.post-details h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.post-details p {
+    font-size: 1.2em;
+    line-height: 1.6;
+}
