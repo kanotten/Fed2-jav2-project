@@ -100,10 +100,8 @@ document.getElementById("deleteBtn").addEventListener("click", function () {
   if (postId) {
     deletePost(postId)
       .then(() => {
-        // Nullstill sletteknappen etter at posten er slettet
-        document.getElementById("deleteBtn").disabled = true;
-        document.querySelector('button[type="submit"]').disabled = true;
-        document.getElementById("postIdInput").value = ""; // Nullstill valgt ID
+        // Re-populer dropdown etter sletting for å tillate sletting av flere poster
+        populatePostDropdown();
       })
       .catch((error) => console.error("Feil ved sletting:", error));
   } else {

@@ -1,14 +1,15 @@
-let isDeleted = false; // Variabel for å spore om posten er slettet
+let isDeleting = false; // Variabel for å spore om en sletting er i gang
 
 export async function deletePost(postId) {
   const token = localStorage.getItem("authToken");
   const name = localStorage.getItem("name");
 
-  if (isDeleted) {
-    // Sjekk om posten allerede er slettet
-    alert("Posten er allerede slettet.");
-    return; // Stopp funksjonen hvis posten allerede er slettet
+  if (isDeleting) {
+    alert("En sletting er allerede i gang.");
+    return; // Stopp hvis en sletting allerede pågår
   }
+
+  isDeleting = true; // Merk at en sletting pågår
 
   try {
     const response = await fetch(
@@ -25,9 +26,6 @@ export async function deletePost(postId) {
     if (response.status === 204) {
       alert("Posten ble slettet!");
 
-      // Sett isDeleted til true etter suksessfull sletting
-      isDeleted = true;
-
       // Fjern posten fra dropdown
       const dropdown = document.getElementById("postIdInput");
       const optionToDelete = dropdown.querySelector(
@@ -37,19 +35,19 @@ export async function deletePost(postId) {
         dropdown.removeChild(optionToDelete);
       }
 
-      // Tøm skjemaet etter suksessfull sletting
+      // Tøm skjemaet etter sletting
       document.forms.editPost.reset();
-
-      // Deaktiver sletteknappen
-      document.getElementById("deleteBtn").disabled = true;
-
-      // Returner for å stoppe videre utførelse
-      return;
     } else {
       console.error("Sletting mislyktes. Status:", response.status);
       alert("Kunne ikke slette posten.");
     }
   } catch (error) {
     console.error("Feil ved sletting av post:", error);
+  } finally {
+    // Sett isDeleting tilbake til false etter slettingen
+    isDeleting = false;
+
+    // Aktiver sletteknappen igjen
+    document.getElementById("deleteBtn").disabled = false;
   }
 }
