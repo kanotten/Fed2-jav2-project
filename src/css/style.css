@@ -140,3 +140,55 @@ input:focus {
     background-color: #c82333; /* Darker red on hover */
 }
 
+/* Container for postene */
+.post-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px; /* Gir mellomrom mellom postene */
+}
+
+.post-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    width: 300px;
+    padding: 15px;
+    text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.post-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.post-card h2 {
+    font-size: 1.5em;
+    margin: 10px 0;
+    color: #333;
+}
+
+.post-card p {
+    font-size: 1em;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.post-card .tags {
+    font-size: 0.85em;
+    color: #007bff;
+}
+
+.post-card .date {
+    font-size: 0.85em;
+    color: #777;
+}
+
+/* Hover-effekt for postene */
+.post-card:hover {
+    transform: translateY(-10px); /* Løfter opp kortet */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); /* Øker skyggens intensitet */
+}

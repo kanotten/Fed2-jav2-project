@@ -1,5 +1,3 @@
-// src/js/router/views/home.js
-
 import { getPosts } from "/src/js/api/post/read.js"; // Importér funksjonen som henter innlegg
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -7,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const apiKey = localStorage.getItem("apiKey");
 
   const container = document.querySelector(".container");
+  const postsContainer = document.querySelector(".post-list");
 
   // Hvis brukeren ikke er logget inn, vis en velkomstmelding
   if (!authToken || !apiKey) {
@@ -16,22 +15,22 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     // Hvis brukeren er logget inn, vis innleggene
     getPosts().then((posts) => {
-      const postsContainer = document.createElement("div");
-      postsContainer.className = "posts-container";
-
       posts.data.forEach((post) => {
         const postElement = document.createElement("div");
-        postElement.className = "post";
+        postElement.className = "post-card";
         postElement.innerHTML = `
+          <img src="${
+            post.media?.url || "https://via.placeholder.com/300"
+          }" alt="${post.media?.alt || "No image available"}">
           <h2>${post.title}</h2>
-          <p>${post.body}</p>
-          <p>Tags: ${post.tags.join(", ")}</p>
-          <p>Opprettet: ${new Date(post.created).toLocaleDateString()}</p>
+          <p>${post.body || "No description available"}</p>
+          <p class="tags">Tags: ${post.tags.join(", ")}</p>
+          <p class="date">Opprettet: ${new Date(
+            post.created
+          ).toLocaleDateString()}</p>
         `;
         postsContainer.appendChild(postElement);
       });
-
-      container.appendChild(postsContainer);
     });
   }
 });
