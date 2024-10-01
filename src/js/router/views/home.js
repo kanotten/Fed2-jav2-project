@@ -1,3 +1,5 @@
+// src/js/router/views/home.js
+
 import { getPosts } from "/src/js/api/post/read.js"; // Importér funksjonen som henter innlegg
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -21,9 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         postElement.innerHTML = `
         <a href="/post.html?id=${post.id}">
-          <img src="${post.media?.url || ""}" alt="${
-          post.media?.alt || "No image available"
-        }">
+          <img src="${
+            post.media?.url || "https://via.placeholder.com/150"
+          }" alt="${post.media?.alt || "No image available"}">
           <h2>${post.title}</h2>
           <p>${post.body || "No description available"}</p>
           <p class="tags">Tags: ${post.tags.join(", ")}</p>
