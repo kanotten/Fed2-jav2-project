@@ -1,5 +1,21 @@
-export async function readPost(id) {}
+// src/js/api/post/read.js
 
-export async function readPosts(limit = 12, page = 1, tag) {}
+export async function getPosts() {
+  const authToken = localStorage.getItem("authToken");
+  const apiKey = localStorage.getItem("apiKey");
 
-export async function readPostsByUser(username, limit = 12, page = 1, tag) {}
+  const options = {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+      "X-Noroff-API-Key": apiKey,
+    },
+  };
+
+  const response = await fetch(
+    "https://v2.api.noroff.dev/social/posts",
+    options
+  );
+  const data = await response.json();
+
+  return data;
+}
