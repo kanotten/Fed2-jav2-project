@@ -7,7 +7,6 @@
   <title>Edit Post</title>
   <link rel="stylesheet" href="../../src/css/navbar.css">
   <link rel="stylesheet" href="../../src/css/edit-post.css">
-
   <script type="module" src="/src/app.js"></script>
 </head>
 
@@ -15,23 +14,42 @@
   <div id="navbar-container"></div> <!-- Navbar vil bli lastet inn her -->
 
   <h1>Edit Post</h1>
-  <h2>hey</h2>
+
+  <!-- Dropdown for å velge post å redigere -->
+  <div>
+    <label for="postIdInput">Velg en post å redigere</label>
+    <select id="postIdInput"></select> <!-- Denne vil fylles dynamisk -->
+  </div>
+
   <form name="editPost">
     <div>
       <label for="title">Title</label>
       <input id="title" type="text" name="title" required />
     </div>
-
     <div>
       <label for="content">Content</label>
-      <textarea id="content" name="content" required></textarea>
+      <textarea id="content" name="content"></textarea>
+    </div>
+    <div>
+      <label for="tags">Tags (comma-separated)</label>
+      <input id="tags" type="text" name="tags" />
+    </div>
+    <div>
+      <label for="mediaUrl">Media URL</label>
+      <input id="mediaUrl" type="text" name="mediaUrl" />
+    </div>
+    <div>
+      <label for="mediaAlt">Media Alt Text</label>
+      <input id="mediaAlt" type="text" name="mediaAlt" required />
     </div>
 
     <button type="submit">Update</button>
+    <button type="button" id="deleteBtn">Delete</button>
+
   </form>
 
   <script type="module" src="/src/navbar.js"></script>
-
+  <script type="module" src="../../src/js/router/views/postEdit.js"></script> <!-- JavaScript-fil for redigering -->
 </body>
 
 </html>
