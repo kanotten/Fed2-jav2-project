@@ -5,13 +5,12 @@ export async function deletePost(postId) {
   const name = localStorage.getItem("name");
 
   if (isDeleting) {
-    alert("En sletting er allerede i gang.");
     return; // Stopp hvis en sletting allerede pågår
   }
 
-  isDeleting = true; // Merk at en sletting pågår
-
   try {
+    isDeleting = true; // Merk at en sletting pågår
+
     const response = await fetch(
       `https://v2.api.noroff.dev/blog/posts/${name}/${postId}`,
       {
@@ -44,10 +43,6 @@ export async function deletePost(postId) {
   } catch (error) {
     console.error("Feil ved sletting av post:", error);
   } finally {
-    // Sett isDeleting tilbake til false etter slettingen
-    isDeleting = false;
-
-    // Aktiver sletteknappen igjen
-    document.getElementById("deleteBtn").disabled = false;
+    isDeleting = false; // Sett isDeleting tilbake til false etter slettingen
   }
 }
