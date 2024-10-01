@@ -192,3 +192,15 @@ input:focus {
     transform: translateY(-10px); /* Løfter opp kortet */
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); /* Øker skyggens intensitet */
 }
+
+
+/* Fjerner blå farge og understreking på lenker i postene */
+.post-card a {
+    text-decoration: none;
+    color: inherit; /* Arver fargen fra elementet rundt */
+}
+
+.post-card a:hover {
+    text-decoration: none;
+    color: inherit;
+}
