@@ -46,8 +46,39 @@ body {
     border-radius: 5px;
     cursor: pointer;
   }
+
+  .delete-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #dc3545; /* Rød farge */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .delete-button:hover {
+    background-color: #c82333; /* Mørkere rød ved hover */
+  }
+  
   
   button:hover {
     background-color: #218838;
   }
   
+  /* Spesifikke endringer for dropdown-menyen */
+#postIdInput {
+  width: 50%; /* Tilpasset bredde for desktop */
+  padding: 10px;
+  margin: 20px auto; /* Gir den litt avstand og sentrering */
+  display: block; /* Sørger for at den er sentrert */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 16px;
+  text-align: center; /* Sentrer teksten i dropdown */
+}
+
+label {
+  text-align: center;
+}
