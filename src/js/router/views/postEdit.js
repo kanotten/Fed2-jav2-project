@@ -57,8 +57,8 @@ export async function populatePostDropdown() {
 
       posts.data.forEach((post) => {
         const option = document.createElement("option");
-        option.value = post.id;
-        option.textContent = post.title;
+        option.value = post.id; // Lagre post-ID som value
+        option.textContent = post.title; // Vis tittel i dropdown
         dropdown.appendChild(option);
       });
     } else {
@@ -83,12 +83,30 @@ document.addEventListener("DOMContentLoaded", populatePostDropdown);
 // Oppdatere post ved innsending av skjema
 document.forms.editPost.addEventListener("submit", function (event) {
   event.preventDefault();
+
+  // Sjekk om det er en gyldig post-ID
   const postId = document.getElementById("postIdInput").value;
-  updatePost(postId); // Oppdaterer post basert på ID
+  if (postId) {
+    updatePost(postId); // Oppdater post basert på ID
+  } else {
+    alert("Post finnes ikke lenger!");
+  }
 });
 
 // Koble delete-knappen til deletePost-funksjonen
 document.getElementById("deleteBtn").addEventListener("click", function () {
   const postId = document.getElementById("postIdInput").value;
-  deletePost(postId); // Sletter post basert på ID
+
+  if (postId) {
+    deletePost(postId)
+      .then(() => {
+        // Nullstill sletteknappen etter at posten er slettet
+        document.getElementById("deleteBtn").disabled = true;
+        document.querySelector('button[type="submit"]').disabled = true;
+        document.getElementById("postIdInput").value = ""; // Nullstill valgt ID
+      })
+      .catch((error) => console.error("Feil ved sletting:", error));
+  } else {
+    alert("Post finnes ikke!");
+  }
 });
