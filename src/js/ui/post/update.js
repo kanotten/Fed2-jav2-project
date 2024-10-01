@@ -1,10 +1,16 @@
-// Oppdater en post basert på ID
-export async function updatePost(id) {
-  const name = localStorage.getItem("name");
-  const token = localStorage.getItem("authToken");
-  const apiKey = localStorage.getItem("apiKey");
+let isUpdating = false; // Variabel for å spore om en oppdatering pågår
 
-  const postData = {
+export async function updatePost(postId) {
+  // Sjekk om en oppdatering pågår
+  if (isUpdating) {
+    // alert("datering pågår, vennligst vent.");
+    return;
+  }
+
+  const token = localStorage.getItem("authToken");
+  const name = localStorage.getItem("name");
+
+  const updatedPost = {
     title: document.getElementById("title").value,
     body: document.getElementById("content").value,
     tags: document
@@ -17,35 +23,44 @@ export async function updatePost(id) {
     },
   };
 
+  // Merk at oppdatering er i gang
+  isUpdating = true;
+
   try {
     const response = await fetch(
-      `https://v2.api.noroff.dev/blog/posts/${name}/${id}`,
+      `https://v2.api.noroff.dev/blog/posts/${name}/${postId}`,
       {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
-          "X-Noroff-API-Key": apiKey,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(postData),
+        body: JSON.stringify(updatedPost),
       }
     );
 
     if (response.ok) {
-      const updatedPost = await response.json();
-      console.log("Post oppdatert:", updatedPost);
       alert("Posten ble oppdatert!");
+
+      // Dynamisk oppdater dropdown med ny tittel
+      const dropdown = document.getElementById("postIdInput");
+      const optionToUpdate = dropdown.querySelector(
+        `option[value="${postId}"]`
+      );
+      if (optionToUpdate) {
+        optionToUpdate.textContent = updatedPost.title;
+      }
+
+      // Tøm skjemaet etter oppdatering
+      document.forms.editPost.reset();
     } else {
-      console.error("Feil ved oppdatering av post:", response.statusText);
+      console.error("Oppdatering mislyktes. Status:", response.status);
+      alert("Kunne ikke oppdatere posten.");
     }
   } catch (error) {
-    console.error("Feil:", error);
+    console.error("Feil ved oppdatering av post:", error);
+  } finally {
+    // Tillat ny oppdatering etter at den nåværende er fullført
+    isUpdating = false;
   }
 }
-
-// Oppdatere post ved innsending av skjema
-document.forms.editPost.addEventListener("submit", function (event) {
-  event.preventDefault();
-  const postId = document.getElementById("postIdInput").value;
-  updatePost(postId); // Oppdater post
-});
