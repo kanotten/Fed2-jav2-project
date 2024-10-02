@@ -20,11 +20,12 @@ export async function fetchPost(id) {
 
     if (response.ok) {
       const post = await response.json();
+      console.log("Post data mottatt:", post);
       document.getElementById("title").value = post.data.title;
       document.getElementById("content").value = post.data.body;
       document.getElementById("tags").value = post.data.tags.join(", ");
-      document.getElementById("mediaUrl").value = post.data.media.url;
-      document.getElementById("mediaAlt").value = post.data.media.alt;
+      document.getElementById("mediaUrl").value = post.data.media.url || "";
+      document.getElementById("mediaAlt").value = post.data.media.alt || "";
     } else {
       console.error("Feil ved henting av post:", response.statusText);
     }
@@ -83,8 +84,6 @@ document.addEventListener("DOMContentLoaded", populatePostDropdown);
 // Oppdatere post ved innsending av skjema
 document.forms.editPost.addEventListener("submit", function (event) {
   event.preventDefault();
-
-  // Sjekk om det er en gyldig post-ID
   const postId = document.getElementById("postIdInput").value;
   if (postId) {
     updatePost(postId); // Oppdater post basert på ID
@@ -96,12 +95,10 @@ document.forms.editPost.addEventListener("submit", function (event) {
 // Koble delete-knappen til deletePost-funksjonen
 document.getElementById("deleteBtn").addEventListener("click", function () {
   const postId = document.getElementById("postIdInput").value;
-
   if (postId) {
     deletePost(postId)
       .then(() => {
-        // Re-populer dropdown etter sletting for å tillate sletting av flere poster
-        populatePostDropdown();
+        populatePostDropdown(); // Oppdater dropdown etter sletting
       })
       .catch((error) => console.error("Feil ved sletting:", error));
   } else {
