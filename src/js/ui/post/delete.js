@@ -1,48 +1,31 @@
-let isDeleting = false; // Variabel for å spore om en sletting er i gang
+// src/js/ui/post/delete.js
 
-export async function deletePost(postId) {
-  const token = localStorage.getItem("authToken");
-  const name = localStorage.getItem("name");
+export function deleteComment(postId, commentId) {
+  const authToken = localStorage.getItem("authToken");
+  const apiKey = localStorage.getItem("apiKey");
 
-  if (isDeleting) {
-    return; // Stopp hvis en sletting allerede pågår
-  }
-
-  try {
-    isDeleting = true; // Merk at en sletting pågår
-
-    const response = await fetch(
-      `https://v2.api.noroff.dev/blog/posts/${name}/${postId}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    if (response.status === 204) {
-      alert("Posten ble slettet!");
-
-      // Fjern posten fra dropdown
-      const dropdown = document.getElementById("postIdInput");
-      const optionToDelete = dropdown.querySelector(
-        `option[value="${postId}"]`
-      );
-      if (optionToDelete) {
-        dropdown.removeChild(optionToDelete);
-      }
-
-      // Tøm skjemaet etter sletting
-      document.forms.editPost.reset();
-    } else {
-      console.error("Sletting mislyktes. Status:", response.status);
-      alert("Kunne ikke slette posten.");
+  fetch(
+    `https://v2.api.noroff.dev/social/posts/${postId}/comment/${commentId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        "X-Noroff-API-Key": apiKey,
+        "Content-Type": "application/json",
+      },
     }
-  } catch (error) {
-    console.error("Feil ved sletting av post:", error);
-  } finally {
-    isDeleting = false; // Sett isDeleting tilbake til false etter slettingen
-  }
+  )
+    .then((response) => {
+      if (response.ok) {
+        // 204 No Content betyr at slettingen var vellykket
+        document.getElementById(`comment-${commentId}`).remove(); // Fjern kommentaren fra UI
+        alert("Kommentaren ble slettet!");
+      } else {
+        throw new Error("Kunne ikke slette kommentaren. Prøv igjen senere.");
+      }
+    })
+    .catch((error) => {
+      console.error("Feil ved sletting av kommentar:", error);
+      alert("Noe gikk galt. Kommentaren ble ikke slettet.");
+    });
 }
