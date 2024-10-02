@@ -6,7 +6,8 @@ export async function getPosts(
   limit = 10,
   search = "",
   sort = "created",
-  tag = ""
+  tag = "",
+  sortOrder = "desc" // Ny parameter for sorteringsrekkefølge
 ) {
   const authToken = localStorage.getItem("authToken");
   const apiKey = localStorage.getItem("apiKey");
@@ -19,7 +20,9 @@ export async function getPosts(
   };
 
   // URL med parametere for søk, filtrering, sortering og paginering
-  const url = `https://v2.api.noroff.dev/social/posts?limit=${limit}&page=${page}&q=${search}&sort=${sort}&_tag=${tag}`;
+  const url = `https://v2.api.noroff.dev/social/posts?limit=${limit}&page=${page}&q=${encodeURIComponent(
+    search
+  )}&sort=${sort}&sortOrder=${sortOrder}&_tag=${tag}`;
   console.log(`Fetching URL: ${url}`);
 
   const response = await fetch(url, options);
