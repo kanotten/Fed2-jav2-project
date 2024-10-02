@@ -1,26 +1,35 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Noroff FED2 JS2 CA</title>
-        <script type="module" src="/src/app.js"></script>
-        <link rel="stylesheet" href="src/css/style.css" />
-    </head>
 
-    <body>
-        <div class="container">
-            <img src="/images/noroff-logo.png" alt="Noroff Logo" class="logo" />
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Noroff FED2 JS2 CA</title>
+    <script type="module" src="/src/app.js"></script>
+    <link rel="stylesheet" href="/src/css/navbar.css">
+    <link rel="stylesheet" href="src/css/style.css" />
+</head>
 
-            <h1>Home</h1>
+<body>
+    <div id="navbar-container"></div> <!-- Navbar-container for å laste inn navbar -->
 
-            <nav class="navbar">
-                <a href="profile/index.html">My Profile</a>
-                <a href="auth/login/">Login</a>
-                <a href="auth/register/index.html">Register</a>
-            </nav>
-            <br />
-            <button class="logout-button">Logout</button>
+    <div class="container">
+        <img src="public/images/noroff-logo.png" alt="Noroff Logo" class="logo" />
+        <h1>Home</h1>
+        <nav class="navbar">
+            <a href="profile/">My Profile</a>
+            <a href="auth/login/">Login</a>
+            <a href="auth/register/index.html">Register</a>
+        </nav>
+
+        <div class="post-list">
+            <!-- Dynamiske innlegg vil bli lagt til her av JavaScript -->
         </div>
-    </body>
+    </div>
+
+    <script type="module" src="/src/js/router/views/home.js"></script>
+    <script type="module" src="/src/navbar.js"></script>
+</body>
+
 </html>
+>

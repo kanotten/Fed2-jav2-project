@@ -1,25 +1,21 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Noroff FED2 JS2 CA</title>
-        <link rel="stylesheet" href="/src/css/navbar.css" />
-
-        <script type="module" src="/src/app.js"></script>
-    </head>
-
-    <body>
-        <div id="navbar-container"></div>
-        <!-- Resten av siden -->
-
-        <h1>Profile</h1>
-        <form name="updateProfile">
-            <button>Update Profile</button>
-        </form>
-
-        <script type="module" src="/src/navbar.js"></script>
-        <script type="module" src="/src/js/ui/auth/logout.js"></script>
-        <!-- Logout scriptet -->
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Noroff FED2 JS2 CA</title>
+    <link rel="stylesheet" href="/src/css/navbar.css" />
+    <script type="module" src="/src/app.js"></script>
+</head>
+<body>
+    <div id="navbar-container"></div>
+    <h1>Profile</h1>
+    <form name="updateProfile">
+        <button>Update Profile</button>
+    </form>
+    <script type="module" src="/src/js/utilities/authGuard.js"></script>
+    <script type="module" src="/src/navbar.js"></script>
+    <script type="module" src="/src/js/ui/auth/logout.js"></script>
+</body>
 </html>
+

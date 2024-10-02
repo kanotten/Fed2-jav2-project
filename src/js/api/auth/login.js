@@ -21,9 +21,13 @@ export async function login({ email, password }) {
     }
 
     const result = await response.json();
-    return result;
+    // Returner name sammen med accessToken
+    return {
+      accessToken: result.data.accessToken,
+      name: result.data.name,
+    };
   } catch (error) {
     console.error("Login failed:", error);
-    throw error; // Kaste feilen videre slik at den kan fanges i innloggingskoden
+    throw error;
   }
 }
