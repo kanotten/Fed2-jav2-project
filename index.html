@@ -22,8 +22,28 @@
             <a href="auth/register/index.html">Register</a>
         </nav>
 
+        <!-- Søk, filter og sorteringsfelt -->
+        <div class="search-filter-container">
+            <input type="text" id="searchInput" placeholder="Søk etter innlegg...">
+            <select id="sortSelect" class="sort-select">
+                <option value="created">Sorter etter dato</option>
+                <option value="_count.comments">Sorter etter kommentarer</option>
+                <option value="_count.reactions">Sorter etter reaksjoner</option>
+            </select>
+            <select id="tagFilter" class="tag-filter">
+                <option value="">Filter etter tag</option>
+                <option value="funny">Funny</option>
+                <option value="battle">Battle</option>
+                <!-- Legg til flere tags her -->
+            </select>
+        </div>
+
         <div class="post-list">
             <!-- Dynamiske innlegg vil bli lagt til her av JavaScript -->
+        </div>
+
+        <div class="pagination">
+            <!-- Pagineringsknapper vil bli generert her av JavaScript -->
         </div>
     </div>
 
