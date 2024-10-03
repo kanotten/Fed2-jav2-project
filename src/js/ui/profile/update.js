@@ -1,50 +1,40 @@
 // src/js/ui/profile/update.js
 
-// Import necessary modules and functions
-import { readUserPosts } from "../../api/profile/read.js";
+import { readUserPosts } from "../../api/profile/read.js"; // Import the function that fetches user posts
 import { authGuard } from "../../utilities/authGuard.js";
+import { getSinglePost } from "../../api/post/read.js"; // Import the function to fetch a single post's details
 
 // Ensure the user is authenticated before proceeding
 authGuard();
 
 // Asynchronous function to fetch and display user-specific posts
 export async function displayUserPosts() {
-  // Retrieve authentication token and username from localStorage
   const authToken = localStorage.getItem("authToken");
   const username = localStorage.getItem("username");
 
   // Check if username and authToken exist
   if (!authToken || !username) {
     console.error("User is not authenticated or username is missing.");
-    alert(
-      "Authentication failed: User is not authenticated or username is missing.",
-    );
     return;
   }
 
   try {
     // Fetch the user's posts from the API
-    console.log(`Fetching posts for username: ${username}`);
     const response = await readUserPosts(username);
-
-    // Get the posts from the response
     const posts = response.data;
 
-    // If no posts are found, show a message and return
     if (!posts || posts.length === 0) {
       console.log("No posts found for this user.");
-      alert("No posts found for this user.");
       return;
     }
 
-    // Clear any existing posts on the page or create a container if it doesn't exist
     let postContainer = document.getElementById("post-container");
     if (!postContainer) {
       postContainer = document.createElement("div");
       postContainer.id = "post-container";
       document.body.appendChild(postContainer);
     } else {
-      postContainer.innerHTML = ""; // Clear existing posts
+      postContainer.innerHTML = "";
     }
 
     // Create and append each post to the container
@@ -52,27 +42,55 @@ export async function displayUserPosts() {
       const postElement = document.createElement("div");
       postElement.className = "post-card";
 
-      // Create the post card with title, image, and content
       postElement.innerHTML = `
-        <div>
-          <img src="${post.media?.url || ""}" alt="${
-            post.media?.alt || "No image available"
-          }" style="width:100%; height:200px; object-fit:cover;">
-          <h2>${post.title}</h2>
+        <div class="post-card-content" data-post-id="${post.id}">
+          <img src="${post.media?.url || ""}" alt="${post.media?.alt || "No image available"}" />
+          <h2>${post.title || "No title available"}</h2>
           <p>${post.body || "No description available"}</p>
-          <p class="tags">Tags: ${post.tags.join(", ")}</p>
-          <p class="date">Created: ${new Date(post.created).toLocaleDateString()}</p>
+          <p class="tags">Tags: ${post.tags?.join(", ") || "No tags available"}</p>
+          <p class="date">Created: ${post.created ? new Date(post.created).toLocaleDateString() : "Invalid date"}</p>
         </div>
       `;
 
-      // Append the post element to the container
+      postElement
+        .querySelector(".post-card-content")
+        .addEventListener("click", () => showPostDetails(post.id));
       postContainer.appendChild(postElement);
     });
 
     console.log("User-specific posts displayed successfully.");
   } catch (error) {
     console.error("Error fetching user posts: ", error);
-    alert("Failed to fetch posts. Please check your connection and try again.");
+  }
+}
+
+// Function to show detailed view of a specific post
+export async function showPostDetails(postId) {
+  try {
+    const post = await getSinglePost(postId); // Fetch single post details
+    const postData = post.data; // Use the correct data field
+
+    // Display post details on the page
+    const postContainer = document.getElementById("post-container");
+    if (postContainer) {
+      postContainer.innerHTML = `
+        <div class="single-post-view">
+          <h2>${postData.title || "No title available"}</h2>
+          <img src="${postData.media?.url || ""}" alt="${postData.media?.alt || "No image available"}" />
+          <p>${postData.body || "No description available"}</p>
+          <p class="tags">Tags: ${postData.tags?.join(", ") || "No tags available"}</p>
+          <p class="date">Created: ${postData.created ? new Date(postData.created).toLocaleDateString() : "Invalid date"}</p>
+          <button id="back-button">Go Back</button>
+        </div>
+      `;
+
+      // Add event listener to the "Go Back" button to reload all posts
+      document
+        .getElementById("back-button")
+        .addEventListener("click", displayUserPosts);
+    }
+  } catch (error) {
+    console.error("Error fetching post details: ", error);
   }
 }
 
