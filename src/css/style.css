@@ -204,3 +204,50 @@ input:focus {
     text-decoration: none;
     color: inherit;
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pagination button:hover {
+    background-color: #0056b3;
+  }
+  
+/* Styling for søkefelt, filter og sortering */
+.search-filter-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search-filter-container input,
+.search-filter-container select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+
+.search-filter-container input:focus,
+.search-filter-container select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.search-filter-container .sort-select,
+.search-filter-container .tag-filter {
+    margin-left: 10px;
+}

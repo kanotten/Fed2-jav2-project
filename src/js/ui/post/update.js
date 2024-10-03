@@ -3,12 +3,17 @@ let isUpdating = false; // Variabel for å spore om en oppdatering pågår
 export async function updatePost(postId) {
   // Sjekk om en oppdatering pågår
   if (isUpdating) {
-    // alert("datering pågår, vennligst vent.");
-    return;
+    return; // Hvis en oppdatering allerede er i gang, vent til den er ferdig
   }
 
   const token = localStorage.getItem("authToken");
-  const name = localStorage.getItem("name");
+  const apiKey = localStorage.getItem("apiKey"); // Hent API-nøkkel fra localStorage
+
+  // Sjekk om token og apiKey finnes, hvis ikke gi en melding og returner
+  if (!token || !apiKey) {
+    alert("Du må være logget inn for å oppdatere en post.");
+    return;
+  }
 
   const updatedPost = {
     title: document.getElementById("title").value,
@@ -28,11 +33,12 @@ export async function updatePost(postId) {
 
   try {
     const response = await fetch(
-      `https://v2.api.noroff.dev/blog/posts/${name}/${postId}`,
+      `https://v2.api.noroff.dev/social/posts/${postId}`, // Bruk postId direkte i URL-en
       {
         method: "PUT",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // Sørg for å sende token riktig
+          "X-Noroff-API-Key": apiKey, // Legg til API-nøkkel i headeren
           "Content-Type": "application/json",
         },
         body: JSON.stringify(updatedPost),
@@ -55,7 +61,13 @@ export async function updatePost(postId) {
       document.forms.editPost.reset();
     } else {
       console.error("Oppdatering mislyktes. Status:", response.status);
-      alert("Kunne ikke oppdatere posten.");
+      if (response.status === 401) {
+        alert(
+          "Du har ikke tilgang til å oppdatere denne posten. Vennligst logg inn på nytt."
+        );
+      } else {
+        alert("Kunne ikke oppdatere posten. Prøv igjen.");
+      }
     }
   } catch (error) {
     console.error("Feil ved oppdatering av post:", error);

@@ -13,14 +13,6 @@ export async function onCreatePost(event) {
     "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/640px-A_small_cup_of_coffee.JPG";
   const mediaAlt = event.target.mediaAlt.value || "Default alt text";
 
-  // Hent name fra localStorage
-  const name = localStorage.getItem("name"); // Nå henter vi det lagrede brukernavnet
-
-  if (!name) {
-    alert("Brukernavn ikke funnet. Vennligst logg inn på nytt.");
-    return;
-  }
-
   // Data som skal sendes
   const postData = {
     title,
@@ -40,18 +32,15 @@ export async function onCreatePost(event) {
 
     console.log("Bruker token og apiKey:", { token, apiKey });
 
-    const response = await fetch(
-      `https://v2.api.noroff.dev/blog/posts/${name}`, // Bruk name fra localStorage i URL-en
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "X-Noroff-API-Key": apiKey,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postData),
-      }
-    );
+    const response = await fetch(`https://v2.api.noroff.dev/social/posts`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "X-Noroff-API-Key": apiKey,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postData),
+    });
 
     console.log("Respons fra serveren:", response); // Logg responsen
 
@@ -72,5 +61,7 @@ export async function onCreatePost(event) {
   }
 }
 
-// Legg til event listener for skjemaet
-document.forms.createPost.addEventListener("submit", onCreatePost);
+// Fjern eventuell tidligere event listener og legg til ny event listener
+const createForm = document.forms.createPost;
+createForm.removeEventListener("submit", onCreatePost);
+createForm.addEventListener("submit", onCreatePost, { once: true });
