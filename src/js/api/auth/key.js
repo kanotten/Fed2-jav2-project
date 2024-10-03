@@ -9,8 +9,8 @@ export async function getKey(authToken) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${authToken}`,
         },
-        body: JSON.stringify({ name: "My API Key name" }), // Optional name
-      }
+        body: JSON.stringify({ name: "My API Key name" }),
+      },
     );
 
     if (!response.ok) {
@@ -21,6 +21,6 @@ export async function getKey(authToken) {
     return result;
   } catch (error) {
     console.error("API Key generation failed:", error);
-    throw error; // Rethrow error for further handling
-  }
+    throw error;
+  } // <-- Closing bracket added here
 }

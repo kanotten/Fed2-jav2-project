@@ -1,33 +1,28 @@
 <!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Post Details</title>
+        <link rel="stylesheet" href="/src/css/navbar.css" />
+        <link rel="stylesheet" href="/src/css/style.css" />
+        <link rel="stylesheet" href="/src/css/post.css" />
+        <script type="module" src="/src/app.js"></script>
+    </head>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Post Details</title>
-    <link rel="stylesheet" href="/src/css/navbar.css">
-    <link rel="stylesheet" href="/src/css/style.css" />
-    <link rel="stylesheet" href="/src/css/post.css"> <!-- Legger til post.css -->
-    <script type="module" src="/src/app.js"></script>
-</head>
+    <body>
+        <div id="navbar-container"></div>
 
-<body>
-    <div id="navbar-container"></div> <!-- Navbar-container for å laste inn navbar -->
-
-    <div class="post-container">
-        <!-- Dynamisk innhold fra JavaScript vil bli lagt til her -->
-        <div class="emoji-reactions">
-            <button onclick="reactToPost('👍')">👍</button>
-            <button onclick="reactToPost('❤️')">❤️</button>
-            <button onclick="reactToPost('😂')">😂</button>
-            <button onclick="reactToPost('🔥')">🔥</button>
+        <div class="post-container">
+            <div class="emoji-reactions">
+                <button onclick="reactToPost('👍')">👍</button>
+                <button onclick="reactToPost('❤️')">❤️</button>
+                <button onclick="reactToPost('😂')">😂</button>
+                <button onclick="reactToPost('🔥')">🔥</button>
+            </div>
         </div>
-    </div>
 
-    <!-- Fjernet statisk kommentarseksjon -->
-
-    <script type="module" src="/src/js/router/views/post.js"></script>
-    <script type="module" src="/src/navbar.js"></script>
-</body>
-
+        <script type="module" src="/src/js/router/views/post.js"></script>
+        <script type="module" src="/src/navbar.js"></script>
+    </body>
 </html>

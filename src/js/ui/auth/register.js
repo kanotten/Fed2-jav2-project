@@ -1,9 +1,9 @@
-import { register } from "/src/js/api/auth/register.js"; // Importer register-funksjonen fra API-et
+import { register } from "/src/js/api/auth/register.js";
 
 const form = document.forms.register;
 
 form.addEventListener("submit", async (event) => {
-  event.preventDefault(); // Forhindre at siden lastes inn på nytt ved form-innsending
+  event.preventDefault();
 
   const name = form.name.value;
   const email = form.email.value;
@@ -12,32 +12,23 @@ form.addEventListener("submit", async (event) => {
   const avatarUrl = form.avatar.value;
   const bannerUrl = form.banner.value;
 
-  // Forbered dataobjektet
-  const data = {
-    name,
-    email,
-    password,
-    bio: bio || "",
-  };
+  const data = { name, email, password, bio: bio || "" };
 
-  // Bare legg til avatar og banner hvis de har gyldige URL-er
   if (avatarUrl) {
-    data.avatar = { url: avatarUrl }; // Legger til avatar hvis URL er gitt
+    data.avatar = { url: avatarUrl };
   }
 
   if (bannerUrl) {
-    data.banner = { url: bannerUrl }; // Legger til banner hvis URL er gitt
+    data.banner = { url: bannerUrl };
   }
-
-  console.log("Sending følgende data til API:", data); // Logging av dataene
 
   try {
     const result = await register(data);
     if (result) {
       alert("Registration successful!");
-      window.location.href = "/auth/login/index.html"; // Omdiriger til innloggingssiden etter registrering
+      window.location.href = "/auth/login/index.html";
     }
   } catch (error) {
-    console.error("Error during registration:", error);
+    alert("Error during registration.");
   }
 });

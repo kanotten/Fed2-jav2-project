@@ -1,55 +1,54 @@
 <!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Norooff FED2 JS2 CA</title>
+        <script type="module" src="/src/app.js"></script>
+        <link rel="stylesheet" href="/src/css/navbar.css" />
+        <link rel="stylesheet" href="/src/css/style.css" />
+    </head>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Norooff FED2 JS2 CA</title>
-    <script type="module" src="/src/app.js"></script>
-    <link rel="stylesheet" href="/src/css/navbar.css">
-    <link rel="stylesheet" href="src/css/style.css" />
-</head>
+    <body>
+        <div id="navbar-container"></div>
 
-<body>
-    <div id="navbar-container"></div> <!-- Navbar-container for å laste inn navbar -->
+        <div class="container">
+            <img src="/images/noroff-logo.png" alt="Noroff Logo" class="logo" />
+            <h1>Home</h1>
+            <nav class="navbar">
+                <a href="/profile/">My Profile</a>
+                <a href="/auth/login/">Login</a>
+                <a href="/auth/register/index.html">Register</a>
+            </nav>
 
-    <div class="container">
-        <img src="public/images/noroff-logo.png" alt="Noroff Logo" class="logo" />
-        <h1>Home</h1>
-        <nav class="navbar">
-            <a href="profile/">My Profile</a>
-            <a href="auth/login/">Login</a>
-            <a href="auth/register/index.html">Register</a>
-        </nav>
+            <div class="search-filter-container">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Søk etter innlegg..."
+                />
+                <select id="sortSelect" class="sort-select">
+                    <option value="created">Sorter etter dato</option>
+                    <option value="_count.comments">
+                        Sorter etter kommentarer
+                    </option>
+                    <option value="_count.reactions">
+                        Sorter etter reaksjoner
+                    </option>
+                </select>
+                <select id="tagFilter" class="tag-filter">
+                    <option value="">Filter etter tag</option>
+                    <option value="funny">Funny</option>
+                    <option value="battle">Battle</option>
+                </select>
+            </div>
 
-        <!-- Søk, filter og sorteringsfelt -->
-        <div class="search-filter-container">
-            <input type="text" id="searchInput" placeholder="Søk etter innlegg...">
-            <select id="sortSelect" class="sort-select">
-                <option value="created">Sorter etter dato</option>
-                <option value="_count.comments">Sorter etter kommentarer</option>
-                <option value="_count.reactions">Sorter etter reaksjoner</option>
-            </select>
-            <select id="tagFilter" class="tag-filter">
-                <option value="">Filter etter tag</option>
-                <option value="funny">Funny</option>
-                <option value="battle">Battle</option>
-                <!-- Legg til flere tags her -->
-            </select>
+            <div class="post-list"></div>
+
+            <div class="pagination"></div>
         </div>
 
-        <div class="post-list">
-            <!-- Dynamiske innlegg vil bli lagt til her av JavaScript -->
-        </div>
-
-        <div class="pagination">
-            <!-- Pagineringsknapper vil bli generert her av JavaScript -->
-        </div>
-    </div>
-
-    <script type="module" src="/src/js/router/views/home.js"></script>
-    <script type="module" src="/src/navbar.js"></script>
-</body>
-
+        <script type="module" src="/src/js/router/views/home.js"></script>
+        <script type="module" src="/src/navbar.js"></script>
+    </body>
 </html>
->

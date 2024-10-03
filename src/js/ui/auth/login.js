@@ -1,4 +1,3 @@
-// src/js/ui/auth/login.js
 import { getKey } from "/src/js/api/auth/key.js";
 import { login } from "/src/js/api/auth/login.js";
 
@@ -12,29 +11,20 @@ form.addEventListener("submit", async (event) => {
 
   try {
     const result = await login({ email, password });
-    if (result && result.accessToken) {
-      const authToken = result.accessToken;
-      const userName = result.name; // Hent name fra API-responsen
-      localStorage.setItem("authToken", authToken);
-      localStorage.setItem("name", userName); // Lagre name i localStorage
+    if (result?.accessToken) {
+      localStorage.setItem("authToken", result.accessToken);
+      localStorage.setItem("name", result.name);
 
-      alert("Login successful!");
-
-      // Create the API key using the authToken
-      const apiKeyResult = await getKey(authToken);
-      if (apiKeyResult && apiKeyResult.data && apiKeyResult.data.key) {
-        localStorage.setItem("apiKey", apiKeyResult.data.key); // Lagre API-nøkkelen
-        console.log("API Key generated:", apiKeyResult.data.key);
-      } else {
-        console.error("Failed to generate API Key");
+      const apiKeyResult = await getKey(result.accessToken);
+      if (apiKeyResult?.data?.key) {
+        localStorage.setItem("apiKey", apiKeyResult.data.key);
       }
 
       window.location.href = "/profile/index.html";
     } else {
-      alert("Login failed: No access token received.");
+      alert("Login failed.");
     }
   } catch (error) {
-    console.error("Error during login:", error);
     alert("Login failed: " + error.message);
   }
 });

@@ -16,12 +16,12 @@ export async function login({ email, password }) {
     if (!response.ok) {
       const errorResponse = await response.json();
       throw new Error(
-        `Error: ${response.status} - ${errorResponse.errors[0].message}`
+        `Error: ${response.status} - ${errorResponse.errors[0].message}`,
       );
     }
 
     const result = await response.json();
-    // Returner name sammen med accessToken
+
     return {
       accessToken: result.data.accessToken,
       name: result.data.name,
