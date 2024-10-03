@@ -61,7 +61,7 @@ export async function onCreatePost(event) {
   }
 }
 
-// Legg til event listener for skjemaet. Sikre at eventen bare legges til én gang.
-document.forms.createPost.addEventListener("submit", onCreatePost, {
-  once: true,
-});
+// Fjern eventuell tidligere event listener og legg til ny event listener
+const createForm = document.forms.createPost;
+createForm.removeEventListener("submit", onCreatePost);
+createForm.addEventListener("submit", onCreatePost, { once: true });

@@ -1,24 +1,26 @@
-// src/js/ui/post/delete.js
-
-let isDeleting = false; // Variabel for å spore om en sletting er i gang
+let isDeletingPost = false; // Variabel for å spore om en post-sletting er i gang
+let isDeletingComment = false; // Variabel for å spore om en kommentar-sletting er i gang
 
 // Funksjon for å slette et innlegg (post)
 export async function deletePost(postId) {
   const authToken = localStorage.getItem("authToken");
   const apiKey = localStorage.getItem("apiKey");
 
-  console.log("deletePost-funksjonen kalles med postId:", postId);
+  if (!authToken || !apiKey) {
+    console.error("Auth-token eller API-nøkkel mangler!");
+    return;
+  }
 
-  if (isDeleting) {
-    console.log("En sletting pågår allerede, avbryter.");
+  if (isDeletingPost) {
+    console.log("En sletting av innlegg pågår allerede, avbryter.");
     return; // Stopp hvis en sletting allerede pågår
   }
 
   try {
-    isDeleting = true; // Merk at en sletting pågår
-
+    console.log("Sletter innlegg med ID:", postId);
+    isDeletingPost = true; // Merk at en sletting pågår
     const response = await fetch(
-      `https://v2.api.noroff.dev/social/posts/${postId}`,
+      `https://v2.api.noroff.dev/social/posts/${postId}`, // Bruk det riktige endepunktet
       {
         method: "DELETE",
         headers: {
@@ -30,17 +32,19 @@ export async function deletePost(postId) {
     );
 
     if (response.status === 204) {
-      console.log("Innlegget ble slettet!");
-      alert("Innlegget ble slettet!");
+      console.log("Innlegget ble slettet fra serveren.");
+      const postElement = document.getElementById(`post-${postId}`);
+      if (postElement) {
+        postElement.remove();
+        console.log("Innlegget ble fjernet fra UI.");
+      }
     } else {
       console.error("Sletting mislyktes. Status:", response.status);
-      alert("Kunne ikke slette innlegget.");
     }
   } catch (error) {
     console.error("Feil ved sletting av innlegg:", error);
   } finally {
-    isDeleting = false; // Sett isDeleting tilbake til false etter slettingen
-    console.log("Sletting fullført, isDeleting satt til false.");
+    isDeletingPost = false; // Sett isDeletingPost tilbake til false etter slettingen
   }
 }
 
@@ -49,20 +53,19 @@ export async function deleteComment(postId, commentId) {
   const authToken = localStorage.getItem("authToken");
   const apiKey = localStorage.getItem("apiKey");
 
-  console.log(
-    "deleteComment-funksjonen kalles med postId:",
-    postId,
-    "og commentId:",
-    commentId
-  );
+  if (!authToken || !apiKey) {
+    console.error("Auth-token eller API-nøkkel mangler!");
+    return;
+  }
 
-  if (isDeleting) {
-    console.log("En sletting pågår allerede, avbryter.");
+  if (isDeletingComment) {
+    console.log("En sletting av kommentar pågår allerede, avbryter.");
     return; // Stopp hvis en sletting allerede pågår
   }
 
   try {
-    isDeleting = true; // Merk at en sletting pågår
+    console.log("Sletter kommentar med ID:", commentId);
+    isDeletingComment = true; // Merk at en sletting pågår
 
     const response = await fetch(
       `https://v2.api.noroff.dev/social/posts/${postId}/comment/${commentId}`,
@@ -77,22 +80,18 @@ export async function deleteComment(postId, commentId) {
     );
 
     if (response.status === 204) {
-      console.log("Kommentaren ble slettet!");
-      alert("Kommentaren ble slettet!");
-
-      // Fjern kommentar fra UI om nødvendig
+      console.log("Kommentaren ble slettet fra serveren.");
       const commentElement = document.getElementById(`comment-${commentId}`);
       if (commentElement) {
-        commentElement.remove(); // Fjern fra DOM
+        commentElement.remove();
+        console.log("Kommentaren ble fjernet fra UI.");
       }
     } else {
       console.error("Sletting mislyktes. Status:", response.status);
-      alert("Kunne ikke slette kommentaren.");
     }
   } catch (error) {
     console.error("Feil ved sletting av kommentar:", error);
   } finally {
-    isDeleting = false; // Sett isDeleting tilbake til false etter slettingen
-    console.log("Sletting av kommentar fullført, isDeleting satt til false.");
+    isDeletingComment = false; // Sett isDeletingComment tilbake til false etter slettingen
   }
 }

@@ -104,8 +104,12 @@ document.forms.editPost.addEventListener("submit", function (event) {
   }
 });
 
-// Koble delete-knappen til deletePost-funksjonen (uten brukernavn i URL-en)
-document.getElementById("deleteBtn").addEventListener("click", function () {
+// Fjern event listener før du legger til ny for delete-knappen
+const deleteButton = document.getElementById("deleteBtn");
+deleteButton.removeEventListener("click", handleDelete);
+deleteButton.addEventListener("click", handleDelete, { once: true });
+
+function handleDelete() {
   const postId = document.getElementById("postIdInput").value;
   if (postId) {
     deletePost(postId)
@@ -117,4 +121,4 @@ document.getElementById("deleteBtn").addEventListener("click", function () {
   } else {
     alert("Post finnes ikke!");
   }
-});
+}
