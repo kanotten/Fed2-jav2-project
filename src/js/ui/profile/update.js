@@ -7,8 +7,12 @@ import { getSinglePost } from "../../api/post/read.js"; // Import the function t
 // Ensure the user is authenticated before proceeding
 authGuard();
 
+let currentPage = 1;
+const postsPerPage = 12; // Number of posts to show per page
+let totalPages = 1; // This will be updated based on the number of posts
+
 // Asynchronous function to fetch and display user-specific posts
-export async function displayUserPosts() {
+export async function displayUserPosts(page = 1) {
   const authToken = localStorage.getItem("authToken");
   const username = localStorage.getItem("username");
 
@@ -28,6 +32,14 @@ export async function displayUserPosts() {
       return;
     }
 
+    // Calculate total pages
+    totalPages = Math.ceil(posts.length / postsPerPage);
+
+    // Determine the start and end index for slicing posts for the current page
+    const startIndex = (page - 1) * postsPerPage;
+    const endIndex = startIndex + postsPerPage;
+    const paginatedPosts = posts.slice(startIndex, endIndex);
+
     let postContainer = document.getElementById("post-container");
     if (!postContainer) {
       postContainer = document.createElement("div");
@@ -38,7 +50,7 @@ export async function displayUserPosts() {
     }
 
     // Create and append each post to the container
-    posts.forEach((post) => {
+    paginatedPosts.forEach((post) => {
       const postElement = document.createElement("div");
       postElement.className = "post-card";
 
@@ -57,6 +69,9 @@ export async function displayUserPosts() {
         .addEventListener("click", () => showPostDetails(post.id));
       postContainer.appendChild(postElement);
     });
+
+    // Display pagination controls
+    displayPaginationControls();
 
     console.log("User-specific posts displayed successfully.");
   } catch (error) {
@@ -87,11 +102,49 @@ export async function showPostDetails(postId) {
       // Add event listener to the "Go Back" button to reload all posts
       document
         .getElementById("back-button")
-        .addEventListener("click", displayUserPosts);
+        .addEventListener("click", () => displayUserPosts(currentPage));
     }
   } catch (error) {
     console.error("Error fetching post details: ", error);
   }
+}
+
+// Function to display pagination controls
+function displayPaginationControls() {
+  let paginationContainer = document.getElementById("pagination-container");
+  if (!paginationContainer) {
+    paginationContainer = document.createElement("div");
+    paginationContainer.id = "pagination-container";
+    paginationContainer.style.textAlign = "center";
+    document.body.appendChild(paginationContainer);
+  }
+
+  paginationContainer.innerHTML = ""; // Clear existing controls
+
+  // Create and append Previous button
+  const prevButton = document.createElement("button");
+  prevButton.textContent = "Previous";
+  prevButton.disabled = currentPage === 1;
+  prevButton.addEventListener("click", () => {
+    currentPage--;
+    displayUserPosts(currentPage);
+  });
+  paginationContainer.appendChild(prevButton);
+
+  // Create and append Next button
+  const nextButton = document.createElement("button");
+  nextButton.textContent = "Next";
+  nextButton.disabled = currentPage === totalPages;
+  nextButton.addEventListener("click", () => {
+    currentPage++;
+    displayUserPosts(currentPage);
+  });
+  paginationContainer.appendChild(nextButton);
+
+  // Create and append page indicator
+  const pageIndicator = document.createElement("span");
+  pageIndicator.textContent = ` Page ${currentPage} of ${totalPages} `;
+  paginationContainer.appendChild(pageIndicator);
 }
 
 // Automatically display user posts when this script is loaded
