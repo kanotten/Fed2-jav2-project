@@ -1,7 +1,6 @@
 import { deletePost } from "../../ui/post/delete.js";
 import { updatePost } from "../../ui/post/update.js";
 
-// Hent og fyll skjema med postdata basert på valgt post ID
 export async function fetchPost(id) {
   const token = localStorage.getItem("authToken");
   const apiKey = localStorage.getItem("apiKey");
@@ -14,12 +13,11 @@ export async function fetchPost(id) {
           Authorization: `Bearer ${token}`,
           "X-Noroff-API-Key": apiKey,
         },
-      }
+      },
     );
 
     if (response.ok) {
       const post = await response.json();
-      console.log("Post data mottatt:", post);
       document.getElementById("title").value = post.data.title;
       document.getElementById("content").value = post.data.body;
       document.getElementById("tags").value = post.data.tags.join(", ");
@@ -33,11 +31,10 @@ export async function fetchPost(id) {
   }
 }
 
-// Dynamisk fylle dropdown for valg av post (kun brukerens egne poster)
 export async function populatePostDropdown() {
   const token = localStorage.getItem("authToken");
   const apiKey = localStorage.getItem("apiKey");
-  const currentUser = localStorage.getItem("name"); // Hent nåværende bruker
+  const currentUser = localStorage.getItem("name");
 
   try {
     const response = await fetch(
@@ -47,23 +44,22 @@ export async function populatePostDropdown() {
           Authorization: `Bearer ${token}`,
           "X-Noroff-API-Key": apiKey,
         },
-      }
+      },
     );
 
     if (response.ok) {
       const posts = await response.json();
       const dropdown = document.getElementById("postIdInput");
-      dropdown.innerHTML = ""; // Tøm dropdown
+      dropdown.innerHTML = "";
 
-      // Filtrer postene basert på den nåværende brukeren
       const userPosts = posts.data.filter(
-        (post) => post.author.name === currentUser
+        (post) => post.author.name === currentUser,
       );
 
       userPosts.forEach((post) => {
         const option = document.createElement("option");
-        option.value = post.id; // Lagre post-ID som value
-        option.textContent = post.title; // Vis tittel i dropdown
+        option.value = post.id;
+        option.textContent = post.title;
         dropdown.appendChild(option);
       });
 
@@ -78,33 +74,29 @@ export async function populatePostDropdown() {
   }
 }
 
-// Hente postdata når post velges fra dropdown
 document
   .getElementById("postIdInput")
   .addEventListener("change", function (event) {
     const postId = event.target.value;
     if (postId) {
-      fetchPost(postId); // Hent post basert på ID
+      fetchPost(postId);
     } else {
       console.log("Ingen post valgt.");
     }
   });
 
-// Fyll dropdown med poster ved last inn
 document.addEventListener("DOMContentLoaded", populatePostDropdown);
 
-// Oppdatere post ved innsending av skjema
 document.forms.editPost.addEventListener("submit", function (event) {
   event.preventDefault();
   const postId = document.getElementById("postIdInput").value;
   if (postId) {
-    updatePost(postId); // Oppdater post basert på ID
+    updatePost(postId);
   } else {
     alert("Post finnes ikke lenger!");
   }
 });
 
-// Fjern event listener før du legger til ny for delete-knappen
 const deleteButton = document.getElementById("deleteBtn");
 deleteButton.removeEventListener("click", handleDelete);
 deleteButton.addEventListener("click", handleDelete, { once: true });
@@ -114,7 +106,7 @@ function handleDelete() {
   if (postId) {
     deletePost(postId)
       .then(() => {
-        populatePostDropdown(); // Oppdater dropdown etter sletting
+        populatePostDropdown();
         alert("Posten ble slettet.");
       })
       .catch((error) => console.error("Feil ved sletting:", error));

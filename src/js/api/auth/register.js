@@ -3,14 +3,14 @@ export async function register({ name, email, password, bio, banner, avatar }) {
     name,
     email,
     password,
-    bio: bio || "", // Valgfritt
+    bio: bio || "",
     avatar: {
-      url: avatar.url || "", // Valgfritt
-      alt: "My avatar alt text", // Standardverdi
+      url: avatar.url || "",
+      alt: "My avatar alt text",
     },
     banner: {
-      url: banner.url || "", // Valgfritt
-      alt: "My banner alt text", // Standardverdi
+      url: banner.url || "",
+      alt: "My banner alt text",
     },
   };
 
@@ -29,7 +29,7 @@ export async function register({ name, email, password, bio, banner, avatar }) {
       throw new Error(
         `Error: ${response.status} - ${errorResponse.errors
           .map((e) => e.message)
-          .join(", ")}`
+          .join(", ")}`,
       );
     }
 
