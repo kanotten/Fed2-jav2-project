@@ -10,7 +10,7 @@ let totalPages = 1;
 
 export async function displayUserPosts(page = 1) {
   const authToken = localStorage.getItem("authToken");
-  const username = localStorage.getItem("username");
+  const username = localStorage.getItem("name");
 
   if (!authToken || !username) return;
 
